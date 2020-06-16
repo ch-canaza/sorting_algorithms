@@ -16,7 +16,7 @@ void selection_sort(int *array, size_t size)
 	int copy_idx_j;
 	int changes;
 
-	if (array == NULL)
+	if (array == NULL || size < 2)
 		return;
 	for (i = 0; i < size; i++)
 	{
