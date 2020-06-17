@@ -1,83 +1,71 @@
 #include "sort.h"
 
 /**
- * quick_sort - Super fast and impractical sorting function
- * @array: The array to be sorted
- * @size: size of the array
- **/
+ * quick_sort -  function that sorts an array of integers in ascending
+ * order using the Quick sort algorithm
+ * @array: pointer to the array
+ * @size: the size
+ */
 void quick_sort(int *array, size_t size)
 {
-	int *first_idx;
-	size_t last_idx;
-
-	if (array == NULL)
-		return;
-	first_idx = &array[0];
-	last_idx = size;
-	original_quick_sort(array, size, first_idx, last_idx);
+	original_quick_sort(array, 0, size - 1, size);
 }
 
 /**
- * original_quick_sort - Used to call the location to get subarrays
- * @array: The array (sub array of last call) to be sorted
- * @size: Size of the array variable
- * @first_idx: The whole array that is to be sorted
- * @last_idx: The full size of the array that's being sorted originally
- **/
-void original_quick_sort(int *array, size_t size, int *first_idx,
-		       size_t last_idx)
+ * original_quick_sort - recursive sort function
+ * @array: pointer to the array
+ * @size: array size
+ * @first_idx: the first_idx
+ * @last_idx: the hish limit
+ */
+void original_quick_sort(int *array, int first_idx, int last_idx, size_t size)
 {
-	size_t location;
+	int location;
 
-	location = 0;
-
-	if (size > 1)
+	if (first_idx < last_idx)
 	{
-		location = partition(array, size, first_idx, last_idx);
-		original_quick_sort(&array[0], location, first_idx, last_idx);
-		original_quick_sort(&array[location], size - location, first_idx, last_idx);
+		location = partition(array, first_idx, last_idx, size);
+		original_quick_sort(array, first_idx, location - 1, size);
+		original_quick_sort(array, location + 1, last_idx, size);
 	}
-
 }
 
 /**
- * partition - Finds where to split the array and swaps larger items right
- * and smaller items left
- * @array: Size of the array (sub array of last call) being sorted
- * @size: Size of the array variable
- * @first_idx: The whole array that was being sorted
- * @last_idx: Full size of the original array
- * Return: The index where the array should be split into two subarrays
- **/
-size_t partition(int *array, size_t size, int *first_idx, size_t last_idx)
+ * partition - function tha creates a partition and order the array
+ * @array: the array
+ * @size: the size
+ * @first_idx: the first_idx limit
+ * @last_idx: the hish limit
+ * Return: return the pivot location
+ */
+size_t partition(int *array, int first_idx, int last_idx, size_t size)
 {
-	int pivot;
-	long i;
-	long j;
-	int temp;
+	int location, i, j, temp;
 
-	pivot = array[size - 1];
-	i = -1;
-	j = size;
+	location = array[last_idx];
 
-
-	while (1)
+	i = first_idx - 1;
+	for (j = first_idx; j < last_idx; j++)
 	{
-		do {
-			i++;
-		} while (array[i] < pivot);
-		do {
-			j--;
-		} while (array[j] > pivot);
-
-		if (i >= j)
+		if (array[j] <= location)
 		{
-			return ((size_t) i);
+			i++;
+			if (i != j)
+			{
+				temp = array[i];
+				array[i] = array[j];
+				array[j] = temp;
+				print_array(array, size);
+			}
 		}
-		temp = array[i];
-		array[i] = array[j];
-		array[j] = temp;
-		print_array(first_idx, last_idx);
 	}
-	return (j);
+	i++;
+	if (i != j)
+	{
+		temp = array[i];
+		array[i] = array[last_idx];
+		array[last_idx] = temp;
+		print_array(array, size);
+	}
+	return (i);
 }
