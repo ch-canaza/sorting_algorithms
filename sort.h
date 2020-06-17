@@ -26,8 +26,8 @@ void insertion_sort_list(listint_t **list);
 void selection_sort(int *array, size_t size);
 void quick_sort(int *array, size_t size);
 
-size_t partition(int *array, size_t size, int *first_idx, size_t last_idx);
-void original_quick_sort(int *array, size_t size, int *first_idx,
-		       size_t last_idx);
+size_t partition(int *array, int first_idx, int last_idx, size_t size);
+void original_quick_sort(int *array, int first_idx, int last_idx,
+		       size_t size);
 
 # endif /* SORT_H */
