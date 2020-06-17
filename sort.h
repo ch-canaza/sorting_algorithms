@@ -30,4 +30,5 @@ size_t partition(int *array, int first_idx, int last_idx, size_t size);
 void original_quick_sort(int *array, int first_idx, int last_idx,
 		       size_t size);
 
+void shell_sort(int *array, size_t size);
 # endif /* SORT_H */
